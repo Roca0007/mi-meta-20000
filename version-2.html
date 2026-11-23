@@ -1,1 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10243f">
+<title>Mi Meta $20,000 · Versión 2</title>
+<style>
+:root{--navy:#10243f;--navy2:#183653;--blue:#315a7d;--gold:#c9a35b;--bg:#f2f5f8;--card:#fff;--ink:#172536;--muted:#718096;--line:#e4eaf0;--green:#197451;--red:#b94b4b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:88px}
+header{background:linear-gradient(140deg,var(--navy),var(--navy2));color:white;padding:28px 20px 24px;border-radius:0 0 26px 26px}
+.eyebrow{font-size:11px;letter-spacing:2px;color:#c8d4e0;font-weight:700}.brand{font-size:26px;font-weight:800;margin:7px 0 3px}.sub{color:#c8d4e0;font-size:13px}
+main{max-width:720px;margin:auto;padding:18px 16px}.hero{background:linear-gradient(145deg,#17395c,#10243f);color:#fff;padding:20px;border-radius:20px;box-shadow:0 8px 22px #10243f20}
+.label{font-size:11px;letter-spacing:1px;font-weight:700;color:#c9d5e1}.big{font-size:34px;font-weight:800;margin:8px 0 14px;font-variant-numeric:tabular-nums}.progressrow{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#d6e0e9}.track{height:9px;background:#ffffff30;border-radius:20px;overflow:hidden;margin:9px 0}.fill{height:100%;width:0;background:var(--gold);border-radius:20px;transition:width .2s}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:0 3px 12px #152b4008}.card .label{color:var(--muted)}.stat{font-size:23px;font-weight:800;margin-top:7px}.income{color:var(--green)}.expense{color:var(--red)}
+.week{border:1px solid #dfc98e;background:#fffdf7}.week .label{color:#876b32}
+.section-title{font-size:18px;font-weight:800;margin:22px 2px 12px}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.quick button{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 5px;color:var(--navy);font-weight:700;font-size:12px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:5}
+nav button{border:0;background:none;color:#788697;font-size:10px;padding:5px 0}nav button span{display:block;font-size:19px;margin-bottom:3px}nav button.active{color:var(--navy);font-weight:800}
+.panel{display:none}.panel.active{display:block}
+form{display:grid;gap:11px}.field{display:grid;gap:5px}label{font-size:12px;color:var(--muted);font-weight:700}input,select{width:100%;padding:13px;border:1px solid #d8e0e8;border-radius:11px;background:white;color:var(--ink);font:inherit}
+.primary{border:0;background:var(--navy);color:#fff;border-radius:12px;padding:14px;font-weight:800;font-size:14px}.secondary{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:11px;padding:11px;font-weight:700}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.muted{color:var(--muted);font-size:12px}.item{padding:13px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.amount{font-weight:800}.empty{color:var(--muted);text-align:center;padding:24px 8px;font-size:13px}
+.notice{background:#edf3f8;color:#40556b;border-radius:12px;padding:12px;font-size:12px;line-height:1.5;margin-top:14px}
+@media(min-width:600px){main{padding-top:24px}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">TU DINERO · TU FUTURO</div><div class="brand">Mi Meta $20,000</div><div class="sub">Tu progreso, bajo control</div></header>
+<main>
+<section class="panel active" id="home">
+ <div class="hero">
+  <div class="label">AHORRO ACTUAL</div><div class="big" id="saved">$0.00</div>
+  <div class="progressrow"><span id="goalText">Meta: $20,000.00</span><strong id="percent">0% completado</strong></div>
+  <div class="track"><div class="fill" id="bar"></div></div>
+  <div class="progressrow"><span>Dinero restante</span><strong id="remaining">$20,000.00</strong></div>
+ </div>
+ <div class="stats">
+  <div class="card"><div class="label">INGRESOS</div><div class="stat income" id="incomeTotal">$0.00</div></div>
+  <div class="card"><div class="label">GASTOS</div><div class="stat expense" id="expenseTotal">$0.00</div></div>
+  <div class="card week" style="grid-column:1/-1"><div class="label">TU AHORRO ESTA SEMANA</div><div class="stat" id="weekTotal">$0.00</div><div class="muted">Depósitos de ahorro registrados en los últimos 7 días</div></div>
+ </div>
+ <div class="section-title">Accesos rápidos</div>
+ <div class="quick"><button onclick="show('money')">＋ Ingreso</button><button onclick="show('money')">− Gasto</button><button onclick="show('goals')">◎ Mi meta</button></div>
+ <div class="section-title">Movimientos recientes</div><div class="card" id="recent"><div class="empty">Todavía no hay movimientos.</div></div>
+</section>
 
+<section class="panel" id="money">
+ <div class="section-title">Mi dinero</div>
+ <div class="card">
+  <form id="entryForm">
+   <div class="field"><label for="kind">TIPO DE MOVIMIENTO</label><select id="kind"><option value="income">Ingreso</option><option value="expense">Gasto</option><option value="saving">Depósito a mis ahorros</option></select></div>
+   <div class="field"><label for="amount">CANTIDAD ($)</label><input id="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 100" required></div>
+   <div class="field"><label for="description">DESCRIPCIÓN</label><input id="description" maxlength="70" placeholder="Ej. Pago semanal, comida..." required></div>
+   <div class="field"><label for="date">FECHA</label><input id="date" type="date" required></div>
+   <button class="primary" type="submit">Guardar movimiento</button>
+  </form>
+ </div>
+ <div class="section-title">Historial</div><div class="card" id="history"><div class="empty">No hay movimientos registrados.</div></div>
+ <div class="notice">Los datos de esta versión de prueba se guardan en el almacenamiento local de este navegador. No están conectados a tu banco ni se sincronizan automáticamente con otros dispositivos.</div>
+</section>
+
+<section class="panel" id="goals">
+ <div class="section-title">Mi meta de ahorro</div>
+ <div class="card">
+  <form id="goalForm"><div class="field"><label for="goal">META TOTAL ($)</label><input id="goal" type="number" min="1" step="1" inputmode="decimal" value="20000" required></div><button class="primary">Actualizar meta</button></form>
+  <div class="notice">Tu objetivo inicial es $20,000. Puedes cambiarlo cuando quieras.</div>
+ </div>
+ <div class="section-title">Tu avance</div><div class="card"><div class="row"><span class="muted">Ahorrado</span><strong id="goalSaved">$0.00</strong></div><div class="track"><div class="fill" id="goalBar"></div></div><div class="row"><span class="muted">Meta</span><strong id="goalAmount">$20,000.00</strong></div></div>
+</section>
+
+<section class="panel" id="calendar">
+ <div class="section-title">Calendario</div><div class="card"><p>Consulta tus movimientos por fecha en el historial de <strong>Mi dinero</strong>.</p><button class="secondary" onclick="show('money')">Ver historial</button></div>
+</section>
+<section class="panel" id="reports">
+ <div class="section-title">Reportes</div><div class="stats">
+  <div class="card"><div class="label">INGRESOS</div><div class="stat income" id="reportIncome">$0.00</div></div>
+  <div class="card"><div class="label">GASTOS</div><div class="stat expense" id="reportExpense">$0.00</div></div>
+  <div class="card"><div class="label">AHORRO REGISTRADO</div><div class="stat" id="reportSaving">$0.00</div></div>
+  <div class="card"><div class="label">DIFERENCIA INGRESOS - GASTOS</div><div class="stat" id="net">$0.00</div></div>
+ </div>
+ <div class="notice">Este reporte suma los movimientos registrados en esta versión de prueba.</div>
+</section>
+<section class="panel" id="settings">
+ <div class="section-title">Ajustes</div><div class="card">
+  <div class="row"><div><strong>Exportar mis movimientos</strong><div class="muted">Descarga una copia en formato JSON</div></div><button class="secondary" onclick="exportData()">Exportar</button></div>
+  <div class="item"></div>
+  <div class="row"><div><strong>Borrar datos de prueba</strong><div class="muted">Esta acción no se puede deshacer</div></div><button class="secondary" onclick="clearData()">Borrar</button></div>
+ </div>
+ <div class="notice">Versión 2.0 de prueba. No introduzcas información bancaria, contraseñas ni datos sensibles.</div>
+</section>
+</main>
+<nav>
+ <button class="active" data-page="home" onclick="show('home')"><span>⌂</span>Inicio</button>
+ <button data-page="money" onclick="show('money')"><span>▣</span>Mi dinero</button>
+ <button data-page="goals" onclick="show('goals')"><span>◎</span>Metas</button>
+ <button data-page="calendar" onclick="show('calendar')"><span>▦</span>Calendario</button>
+ <button data-page="reports" onclick="show('reports')"><span>▥</span>Reportes</button>
+</nav>
+<script>
+const KEY='miMeta20000_v2_demo';
+let data={goal:20000,items:[]};
+try{const old=localStorage.getItem(KEY);if(old)data=JSON.parse(old)}catch(e){}
+const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n||0);
+const sum=type=>data.items.filter(x=>x.type===type).reduce((a,x)=>a+x.amount,0);
+function saved(){return sum('saving')}
+function persist(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function show(id){document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));if(id==='settings'){document.getElementById('settings').style.display='block'}}
+function itemHTML(x){let sign=x.type==='expense'?'−':x.type==='income'?'+':'↗';let cls=x.type==='income'?'income':x.type==='expense'?'expense':'';let name=x.type==='income'?'Ingreso':x.type==='expense'?'Gasto':'Ahorro';return `<div class="item row"><div><strong>${escapeHTML(x.description)}</strong><div class="muted">${name} · ${x.date}</div></div><div class="amount ${cls}">${sign} ${money(x.amount)}</div></div>`}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){
+ const inc=sum('income'),exp=sum('expense'),sav=saved(),goal=Math.max(1,Number(data.goal)||20000),pct=Math.min(100,sav/goal*100);
+ document.getElementById('saved').textContent=money(sav);document.getElementById('goalText').textContent='Meta: '+money(goal);document.getElementById('percent').textContent=pct.toFixed(1).replace('.0','')+'% completado';document.getElementById('bar').style.width=pct+'%';document.getElementById('remaining').textContent=money(Math.max(0,goal-sav));
+ document.getElementById('incomeTotal').textContent=money(inc);document.getElementById('expenseTotal').textContent=money(exp);
+ const week=Date.now()-7*86400000;const weekly=data.items.filter(x=>x.type==='saving'&&new Date(x.date+'T23:59:59').getTime()>=week).reduce((a,x)=>a+x.amount,0);document.getElementById('weekTotal').textContent=money(weekly);
+ const recent=[...data.items].reverse().slice(0,4);document.getElementById('recent').innerHTML=recent.length?recent.map(itemHTML).join(''):'<div class="empty">Todavía no hay movimientos.</div>';
+ document.getElementById('history').innerHTML=data.items.length?[...data.items].reverse().map(itemHTML).join(''):'<div class="empty">No hay movimientos registrados.</div>';
+ document.getElementById('goal').value=goal;document.getElementById('goalSaved').textContent=money(sav);document.getElementById('goalAmount').textContent=money(goal);document.getElementById('goalBar').style.width=pct+'%';
+ document.getElementById('reportIncome').textContent=money(inc);document.getElementById('reportExpense').textContent=money(exp);document.getElementById('reportSaving').textContent=money(sav);document.getElementById('net').textContent=money(inc-exp);
+}
+document.getElementById('date').value=new Date().toISOString().slice(0,10);
+document.getElementById('entryForm').addEventListener('submit',e=>{e.preventDefault();const amount=Number(document.getElementById('amount').value);if(!(amount>0)){alert('Escribe una cantidad válida.');return}data.items.push({type:document.getElementById('kind').value,amount,description:document.getElementById('description').value.trim(),date:document.getElementById('date').value});persist();e.target.reset();document.getElementById('date').value=new Date().toISOString().slice(0,10);show('money');alert('Movimiento guardado.')});
+document.getElementById('goalForm').addEventListener('submit',e=>{e.preventDefault();const n=Number(document.getElementById('goal').value);if(!(n>0)){alert('Escribe una meta válida.');return}data.goal=n;persist();alert('Meta actualizada.')});
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='mis-movimientos-mi-meta.json';a.click();URL.revokeObjectURL(url)}
+function clearData(){if(confirm('¿Seguro que quieres borrar todos los movimientos de esta versión de prueba? Esta acción no se puede deshacer.')){data={goal:20000,items:[]};persist();alert('Datos de prueba borrados.')}}
+render();
+</script>
+</body></html>
